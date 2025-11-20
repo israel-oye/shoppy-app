@@ -17,7 +17,7 @@ class CartPage extends StatelessWidget {
       builder: (context, provider, _) {
         final cartItems = provider.items;
         return cartItems.isEmpty
-            ? _buildEmptyState()
+            ? _buildEmptyState(context)
             : _buildCart(cartItems, theme, provider);
       },
     );
@@ -53,16 +53,25 @@ class CartPage extends StatelessWidget {
       );
   }
 
-  Widget _buildEmptyState(){
+  Widget _buildEmptyState(BuildContext context){
+    final theme = Theme.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_shopping_cart, size: 62),
-          SizedBox(height: 24),
+          Icon(
+            Icons.add_shopping_cart, 
+            size: 62,
+            color: theme.colorScheme.secondary,
+          ),
+          SizedBox(height: 8),
           Text(
             'Empty Cart',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: theme.colorScheme.secondary,
+            ),
           ),
           Text('Add an item to the cart and it will show up here.'),
         ],
