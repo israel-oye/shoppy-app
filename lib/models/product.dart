@@ -12,6 +12,22 @@ class Product {
     required this.price,
     required this.color
   });
+
+  factory Product.fromJson(Map<String, dynamic> json){
+    return Product(
+      id: json['id'], 
+      name: json['name'], 
+      price: json['price'], 
+      color: Color(json['color'])
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'price': price,
+    'color': color.toARGB32(),
+  };
 }
 
 const List<Product> products = [
