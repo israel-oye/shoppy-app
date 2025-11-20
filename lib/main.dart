@@ -1,5 +1,4 @@
 import 'package:fetch_be/providers/cart_provider.dart';
-import 'package:fetch_be/providers/product_provider.dart';
 import 'package:fetch_be/skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,6 @@ void main() {
   runApp(
     MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_)=> ProductsProvider()),
       ChangeNotifierProvider(create: (_)=>CartProvider()),
     ],
     child: const MyApp()
