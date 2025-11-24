@@ -1,4 +1,5 @@
 import 'package:fetch_be/models/product.dart';
+import 'package:fetch_be/providers/cart_provider.dart';
 import 'package:fetch_be/repositories/product_repository.dart';
 import 'package:fetch_be/services/api_service.dart';
 import 'package:flutter/material.dart';
@@ -28,18 +29,21 @@ class ProductsPage extends StatelessWidget {
         }
 
         if (provider.error != null){
-          return _buildErrorState(provider, provider.error!);
+          return _buildErrorState(context, provider, provider.error!);
         }
 
-        return _buildSuccessState(provider);
+        return _buildSuccessState(context, provider);
       }),
     );
   }
 
-  Widget _buildSuccessState(ProductsProvider provider) {
+  Widget _buildSuccessState(BuildContext context, ProductsProvider provider) {
     final products = provider.products;
     return RefreshIndicator(
-      onRefresh: provider.fetchProducts,
+      onRefresh: () async {
+        Provider.of<CartProvider>(context, listen: false).clearCart();
+        provider.fetchProducts();
+      },
       child: ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
             itemCount: products.length,
@@ -67,7 +71,7 @@ class ProductsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildErrorState(ProductsProvider provider, String error) {
+  Widget _buildErrorState(BuildContext context, ProductsProvider provider, String error) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,6 +94,7 @@ class ProductsPage extends StatelessWidget {
           SizedBox(height: 8,),
           ElevatedButton(
             onPressed: (){
+              Provider.of<CartProvider>(context, listen: false).clearCart();
               provider.fetchProducts();
             },
             child: Text('Retry')
