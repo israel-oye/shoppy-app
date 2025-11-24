@@ -1,5 +1,7 @@
 import 'package:fetch_be/models/product.dart';
+import 'package:fetch_be/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ItemPage extends StatelessWidget {
   final Product item;
@@ -15,26 +17,34 @@ class ItemPage extends StatelessWidget {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         actions: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Icon(Icons.shopping_cart),
-              Positioned(
-                left: -12,
-                top: -10,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color.fromARGB(103, 255, 82, 82),
+          Consumer<CartProvider>(
+            builder: (_, provider, _){
+              return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Icon(Icons.shopping_cart),
+                Positioned(
+                  left: -12,
+                  top: -10,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color.fromARGB(103, 255, 82, 82),
+                    ),
+                    child: Text(
+                        '${provider.items.length}',
+                        style: TextStyle(fontSize: 12),
+                      ),
                   ),
-                  child: Text('99', style: TextStyle(fontSize: 12)),
                 ),
-              ),
-            ],
+              ],
+            );
+            },
           ),
+          SizedBox(width: 8,)
         ],
         title: Column(
           mainAxisSize: MainAxisSize.min,
