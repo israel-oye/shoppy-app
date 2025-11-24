@@ -4,6 +4,7 @@ import 'package:fetch_be/repositories/product_repository.dart';
 import 'package:fetch_be/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import 'package:fetch_be/widgets/product_item.dart';
 import 'package:fetch_be/providers/product_provider.dart';
@@ -25,6 +26,7 @@ class ProductsPage extends StatelessWidget {
       },
       child: Consumer<ProductsProvider>(builder: (_, provider, _) {
         if (provider.isLoading){
+          
           return _buildLoadingState();
         }
 
@@ -59,14 +61,31 @@ class ProductsPage extends StatelessWidget {
   }
 
   Widget _buildLoadingState(){
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16,),
-          Text('Fetching products...')
-        ],
+    final fakeProducts = List.filled(
+      10,
+      Product(
+        id: 0,
+        name: 'Productssssssss',
+        price: 0.99,
+        color: const Color.fromARGB(195, 165, 110, 110),
+      ),
+    );
+    return Skeletonizer(
+      ignoreContainers: false,
+      child: ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+        itemCount: fakeProducts.length,
+        itemBuilder: (ctx, idx) {
+          final currentProduct = fakeProducts[idx];
+          return Card(
+            elevation: 0,
+            child: ListTile(
+              leading: CircleAvatar(backgroundColor: currentProduct.color),
+              title: Text(currentProduct.name),
+              subtitle: Text(currentProduct.price.toString()),
+            ),
+          );
+        },
       ),
     );
   }
