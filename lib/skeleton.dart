@@ -31,6 +31,37 @@ class _SkeletonState extends State<Skeleton> {
         title: Text(_titles[_selectedIndex]),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        actions: [
+          if (_selectedIndex == 1)
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Clear cart'),
+                    content: Text('Are you sure you want to clear the cart?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          context.read<CartProvider>().clearCart();
+                          Navigator.pop(context);
+                        },
+                        child: Text('Yes'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('No'),
+                      ),
+                    ],
+                  ),
+                );
+                
+              },
+              icon: Icon(Icons.remove_shopping_cart),
+            )
+        ],
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
