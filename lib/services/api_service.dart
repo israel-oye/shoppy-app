@@ -3,6 +3,11 @@ import 'package:fetch_be/models/product.dart';
 
 
 class ApiService {
+  ApiService._internal();
+
+  static final ApiService _instance = ApiService._internal();
+  factory ApiService() => _instance;
+
   final _dio = Dio(
     BaseOptions(
       baseUrl: 'https://api.npoint.io',
