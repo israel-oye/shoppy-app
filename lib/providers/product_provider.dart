@@ -25,6 +25,7 @@ class ProductsProvider extends ChangeNotifier{
     } catch(e){
       if (e is DioException) {
         _error = 'Request error: ${e.message}';
+        return;
       }
       _error = e.toString();
     } finally{
