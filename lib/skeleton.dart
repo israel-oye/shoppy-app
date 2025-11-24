@@ -63,7 +63,10 @@ class _SkeletonState extends State<Skeleton> {
             )
         ],
       ),
-      body: _pages[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (idx){
