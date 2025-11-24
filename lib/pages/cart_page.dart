@@ -27,6 +27,7 @@ class CartPage extends StatelessWidget {
     return Column(
         children: [
           Flexible(
+            flex: 3,
             child: ListView.builder(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
               itemCount: cartItems.length,
@@ -36,7 +37,7 @@ class CartPage extends StatelessWidget {
               },
             ),
           ),
-          Spacer(),
+          SizedBox(height: 24,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
