@@ -13,9 +13,12 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/shopping.png',
-              width: MediaQuery.of(context).size.width * 0.7,
+            Opacity(
+              opacity: 0.6,
+              child: Image.asset(
+                'assets/images/shopping.png',
+                width: MediaQuery.of(context).size.width * 0.7,
+              ),
             ),
             SizedBox(height: 8,),
             Text(
