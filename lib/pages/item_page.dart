@@ -95,16 +95,37 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 6),
-          ElevatedButton(
-            onPressed: (){}, 
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Add to Cart'),
-                SizedBox(width: 8,),
-                Icon(Icons.add)
-              ],
-            )
+          Consumer<CartProvider>(
+            builder: (_, provider, _) {
+              bool isAddedToCart = provider.items.contains(item);
+              return isAddedToCart
+              ? ElevatedButton(
+                      onPressed: () {
+                        provider.removeItem(item);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Remove from cart'),
+                          SizedBox(width: 10),
+                          Icon(Icons.remove),
+                        ],
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        provider.addToCart(item);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Add to Cart'),
+                          SizedBox(width: 8),
+                          Icon(Icons.add),
+                        ],
+                      ),
+                    );
+            },
           )
         ],
       ),
