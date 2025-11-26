@@ -1,6 +1,7 @@
 import 'package:fetch_be/pages/cart_page.dart';
 import 'package:fetch_be/pages/product_page.dart';
 import 'package:fetch_be/providers/cart_provider.dart';
+import 'package:fetch_be/widgets/clear_cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,34 +34,7 @@ class _SkeletonState extends State<Skeleton> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         actions: [
           if (_selectedIndex == 1)
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('Clear cart'),
-                    content: Text('Are you sure you want to clear the cart?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          context.read<CartProvider>().clearCart();
-                          Navigator.pop(context);
-                        },
-                        child: Text('Yes'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('No'),
-                      ),
-                    ],
-                  ),
-                );
-                
-              },
-              icon: Icon(Icons.remove_shopping_cart),
-            )
+            const ClearCartButton()
         ],
       ),
       body: IndexedStack(
